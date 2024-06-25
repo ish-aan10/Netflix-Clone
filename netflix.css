@@ -10,8 +10,8 @@ body {
 }
 
 .container {
-    max-width: 1800px;
     width: 100%;
+    margin: 0 auto;
     margin: 0 auto;
 }
 
@@ -37,7 +37,8 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;    
+    justify-content: space-between;
+    margin: 0 10px;    
 }
 
 .nf-icon {
