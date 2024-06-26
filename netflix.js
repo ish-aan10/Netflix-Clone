@@ -2,7 +2,7 @@ const apiKey = "a30b7a37a0066a2632d9b0684c0605b7";
 const apiEndpoints = "https://api.themoviedb.org/3";
 const imgPath = "https://image.tmdb.org/t/p/original";
 const ytKey = "AIzaSyAT7LhhnPL9bpvKJ0oVPt6Pg3ChUjpZpeg";
-const ytPath = "https://www.youtube.com/watch?v=";
+const ytPath = "https://www.youtube.com/embed/";
 
 const apiPaths = {
     fetchAllCategories: `${apiEndpoints}/genre/movie/list?api_key=${apiKey}`,
@@ -74,11 +74,28 @@ function buildMoviesSection(list, categoryName) {
     const moviesCont = document.getElementById("movies-cont");
 
     const moviesListHTML = list.map(item => {
-        return `
-            <div class="image-container">
-                <img class="movie-item" src="${imgPath}${item.backdrop_path}" onclick="searchMovieTrailer('${item.title || item.name}')">   
-            </div>     
-        `;
+        if (item.backdrop_path) {
+            return `
+                    <div class="image-container">
+                        <img class="movie-item" src="${imgPath}${item.backdrop_path}" onmouseover="searchMovieTrailer('${item.title || item.name}','yt${item.id}')">   
+                        <div class="iframe-wrap" id="yt${item.id}"></div>
+                        <div class="pop-win">    
+                            <div class="innerContainer">
+                                <div class="rowOne">
+                                    <div>
+                                        <i class="fa fa-play"></i>
+                                        <i class="fa fa-plus"></i>
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-angle-down"></i>
+                                    </div>
+                                </div>
+                                <div class="innerInfo">${item.name || item.title}</div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+        }
     }).join('');
 
     const moviesSectionHTML = `
@@ -86,7 +103,7 @@ function buildMoviesSection(list, categoryName) {
         <div class="movies-row">
             ${moviesListHTML}
         </div>
-    `
+    `;
 
     const div = document.createElement("div");
     div.className = "movies-section";
@@ -95,7 +112,7 @@ function buildMoviesSection(list, categoryName) {
     moviesCont.append(div);
 }
 
-function searchMovieTrailer(movieName) {
+function searchMovieTrailer(movieName, iframeId) {
     if (!movieName) {
         return;
     }
@@ -103,11 +120,17 @@ function searchMovieTrailer(movieName) {
     fetch(apiPaths.searchOnYoutube(movieName))
     .then(response => response.json())
     .then(response => {
+        console.log(response);
         const bestResult = response.items[0];
-        const youtubeURL = `${ytPath}${bestResult.id.videoId}`;
-        
+        const youtubeURL = `${ytPath}${bestResult.id.videoId}?autoplay=1&controls=0`;
+
+        const elements = document.getElementById(iframeId);
+        const div = document.createElement("div");
+        div.innerHTML = `<iframe src="${youtubeURL}"></iframe>`;
+
+        elements.append(div);        
     })
-    .catch((error) => console.error(error));
+    .catch(error => console.log(error));
 }
 
 window.addEventListener("load", function() {
