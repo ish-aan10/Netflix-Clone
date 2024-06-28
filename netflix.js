@@ -122,7 +122,7 @@ function searchMovieTrailer(movieName, iframeId) {
     .then(response => {
         console.log(response);
         const bestResult = response.items[0];
-        const youtubeURL = `${ytPath}${bestResult.id.videoId}?autoplay=1&controls=0`;
+        const youtubeURL = `${ytPath}${bestResult.id.videoId}?controls=0`;
 
         const elements = document.getElementById(iframeId);
         const div = document.createElement("div");
