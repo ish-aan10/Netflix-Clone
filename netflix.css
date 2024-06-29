@@ -377,6 +377,9 @@ footer {
     }
 }
 @media (max-width: 960px) {
+    .banner-section {
+        background-position: center;
+    }
     .members {
         flex-basis: 50%;
     }
