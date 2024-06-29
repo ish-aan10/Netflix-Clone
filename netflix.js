@@ -4,6 +4,27 @@ const imgPath = "https://image.tmdb.org/t/p/original";
 const ytKey = "AIzaSyAT7LhhnPL9bpvKJ0oVPt6Pg3ChUjpZpeg";
 const ytPath = "https://www.youtube.com/embed/";
 
+const genres = [
+    {"id": 28, "name": "Action"},
+    {"id": 12, "name": "Adventure"},
+    {"id": 16, "name": "Animation"}, 
+    {"id": 35, "name": "Comedy"}, 
+    {"id": 80, "name": "Crime"}, 
+    {"id": 99, "name": "Documentary"}, 
+    {"id": 18, "name": "Drama"}, 
+    {"id": 10751, "name": "Family"}, 
+    {"id": 14, "name": "Fantasy"}, 
+    {"id": 36, "name": "History"}, 
+    {"id": 27, "name": "Horror"}, 
+    {"id": 10402, "name": "Music"}, 
+    {"id": 9648, "name": "Mystery"}, 
+    {"id": 10749, "name": "Romance"}, 
+    {"id": 878, "name": "Science Fiction"}, 
+    {"id": 10770, "name": "TV Movie"}, 
+    {"id": 53, "name": "Thriller"}, 
+    {"id": 10752, "name": "War"}, 
+    {"id": 37, "name": "Western"}];
+
 const apiPaths = {
     fetchAllCategories: `${apiEndpoints}/genre/movie/list?api_key=${apiKey}`,
     fetchMoviesList: (id) => `${apiEndpoints}/discover/movie?api_key=${apiKey}&with_genres=${id}`,
@@ -19,6 +40,7 @@ function init() {
 function fetchTrendingMovies() {
     fetchAndBuildMovieSection(apiPaths.fetchTrending, 'Trending Now')
     .then(list => {
+        console.log(list);
         const randomIndex = parseInt(Math.random() * list.length);
         buildBannerSection(list[randomIndex]);
     })
@@ -70,11 +92,19 @@ function fetchAndBuildMovieSection(fetchUrl, categoryName) {
     .catch(error => console.error(error));
 }
 
+function getGenreNames(genreIds) {
+    return genreIds.map(id => {
+        const genre = genres.find(gen => gen.id === id);
+        return genre ? genre.name  : undefined;
+    }).filter(name => name !== null);
+}
+
 function buildMoviesSection(list, categoryName) {
     const moviesCont = document.getElementById("movies-cont");
 
     const moviesListHTML = list.map(item => {
         if (item.backdrop_path) {
+            const genreNames = getGenreNames(item.genre_ids).join('&nbsp;&#9679; ');
             return `
                     <div class="image-container">
                         <img class="movie-item" src="${imgPath}${item.backdrop_path}" onmouseover="searchMovieTrailer('${item.title || item.name}','yt${item.id}')">   
@@ -85,12 +115,14 @@ function buildMoviesSection(list, categoryName) {
                                     <div>
                                         <i class="fa fa-play"></i>
                                         <i class="fa fa-plus"></i>
+                                        <i class="fa fa-thumbs-up"></i>
                                     </div>
                                     <div>
                                         <i class="fa fa-angle-down"></i>
                                     </div>
                                 </div>
                                 <div class="innerInfo">${item.name || item.title}</div>
+                                <div class="innerGenre">${genreNames}</div>
                             </div>
                         </div>
                     </div>
@@ -136,7 +168,7 @@ function searchMovieTrailer(movieName, iframeId) {
 window.addEventListener("load", function() {
     init();
     window.addEventListener('scroll', function() {
-        const header = document.querySelector(".header");
+        const header = document.getElementById("header");
         if (window.scrollY > 5) {
             header.classList.add("black-bg");
         } else {
