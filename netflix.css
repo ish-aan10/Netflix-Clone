@@ -194,7 +194,8 @@ footer {
     overflow-x: auto;
     overflow-y: hidden;
     gap: 5px;
-    padding: 40px 0;
+    margin-left: -20px;
+    padding: 40px 0 40px 47px;
 }
 
 .image-container {
