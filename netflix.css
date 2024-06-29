@@ -11,7 +11,7 @@ html, body {
 
 .container {
     width: 100%;
-    max-width: 1800px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -371,11 +371,12 @@ footer {
     width: 100%;
 }
 
-@media (max-width: 910px) {
+@media (max-width: 960px) {
     .nav {
         display: none;
     }
 }
+
 @media (max-width: 960px) {
     .banner-section {
         background-position: center;
@@ -387,4 +388,3 @@ footer {
         max-width: 100%;
     }
 }
-
