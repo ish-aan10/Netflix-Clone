@@ -1,6 +1,7 @@
 html, body {
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
     background-color: #141414;
     font-family: Martel Sans;
 }
@@ -49,6 +50,8 @@ header.black-bg {
     max-width: 100px;
     margin: 0 10px;
     cursor: pointer;
+    width: 100px;
+    height: 100%;
 }
 
 .profile-icon {
