@@ -268,17 +268,28 @@ footer {
 
 .rowOne .fa {
     color: white;
-    border: 2px solid white;
+    border: 1px solid white;
     border-radius: 50px;
     padding: 5px 6px;
     font-size: 12px;
     cursor: pointer;
 }
 
+.rowOne .fa-plus {
+    padding-top: 6px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
 .rowOne .fa-play {
     background-color: white;
     color: black;
     padding-left: 7.5px;
+}
+
+.rowOne .fa-angle-down {
+    padding-left: 7.5px;
+    padding-right: 7.5px;
 }
 
 .rowOne .fa:hover {
