@@ -303,7 +303,6 @@ footer {
     background-size: cover;
     min-height: 98vh;
     position: relative;
-    margin-bottom: 50px;
 }
 
 .banner-content {
@@ -390,5 +389,11 @@ footer {
     }
     .banner-overview, .banner-title {
         max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .banner-content {
+        padding-top: 100px;
     }
 }
